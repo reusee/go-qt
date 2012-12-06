@@ -16,6 +16,9 @@ int main(int argc, char** argv) {
 
   cqt_call(CQT_CORE, CQT_NONE, "QWidget", "show", widget, 0);
 
+  cqt_call(CQT_CORE, CQT_NONE, "QDateTime", "currentDateTime", 0, stack);
+  void* t = stack[0].s_voidp;
+
   cqt_call(CQT_GUI, CQT_NONE, "QApplication", "exec", 0, stack);
 
   return 0;

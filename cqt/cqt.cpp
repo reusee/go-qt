@@ -12,24 +12,6 @@ class Binding : public SmokeBinding {
     Binding(Smoke *s): SmokeBinding(s) {}
     void deleted(Smoke::Index classId, void *obj) {}
     bool callMethod(Smoke::Index methodId, void *obj, Smoke::Stack, bool) {
-      Smoke::Method method = smoke->methods[methodId];
-      string name;
-
-      if (method.flags & Smoke::mf_protected) name += "protected ";
-      if (method.flags & Smoke::mf_const) name += "const ";
-
-      name += smoke->methodNames[method.name] + string("(");
-
-      Smoke::Index *idx = smoke->argumentList + method.args;
-      while (*idx) {
-        name += smoke->types[*idx].name;
-        idx++;
-        if (*idx) name += ",";
-      }
-      name += ")";
-
-      cout << name << endl;
-
       return false;
     }
     char* className(Smoke::Index classId) {
