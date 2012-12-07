@@ -62,9 +62,9 @@ int main(int argc, char *argv[]) {
 void write_header(ofstream &out) {
   out << "package smoke_info" << endl;
   out << endl;
-  out << "var classes = make(map[string]*Class)" << endl;
-  out << "var types = make(map[int]*Type)" << endl;
-  out << "var methods = make(map[int]*Method)" << endl;
+  out << "var Classes = make(map[string]*Class)" << endl;
+  out << "var Types = make(map[int]*Type)" << endl;
+  out << "var Methods = make(map[int]*Method)" << endl;
   out << endl;
   out << "var klass *Class" << endl;
   out << "var type_ *Type" << endl;
@@ -108,7 +108,7 @@ void generate_class_def(ofstream& out, Smoke::Class klass) {
   else
     out << "\tfalse," << endl;
   out << "}" << endl;
-  out << "classes[\"" << name << "\"] = klass" << endl;
+  out << "Classes[\"" << name << "\"] = klass" << endl;
 }
 
 void generate_class_inheritance(ofstream& out, Smoke* smoke, Smoke::Class klass) {
@@ -118,8 +118,8 @@ void generate_class_inheritance(ofstream& out, Smoke* smoke, Smoke::Class klass)
     Smoke::Class parent = smoke->classes[*idx];
     if (!parent.className) continue;
     string parent_name(parent.className);
-    out << "classes[\"" << name << "\"].parents = ";
-    out << "append(classes[\"" << name << "\"].parents, classes[\"";
+    out << "Classes[\"" << name << "\"].Parents = ";
+    out << "append(Classes[\"" << name << "\"].Parents, Classes[\"";
     out << parent_name << "\"])" << endl;
     idx++;
   }
@@ -135,7 +135,7 @@ void generate_type_info(ofstream& out, Smoke* smoke, int idx, Smoke::Type t) {
       out << "nil," << endl;
     } else {
       string name(klass.className);
-      out << "classes[\"" << name << "\"]," << endl;
+      out << "Classes[\"" << name << "\"]," << endl;
     }
   } else
     out << "nil," << endl;
@@ -158,7 +158,7 @@ void generate_type_info(ofstream& out, Smoke* smoke, int idx, Smoke::Type t) {
   else
     out << "false," << endl;
   out << "}" << endl;
-  out << "types[" << idx << "] = type_" << endl;
+  out << "Types[" << idx << "] = type_" << endl;
 }
 
 void generate_method_info(ofstream& out, Smoke* smoke, Smoke::Method method, int idx) {
@@ -166,10 +166,10 @@ void generate_method_info(ofstream& out, Smoke* smoke, Smoke::Method method, int
   if (!klass.className) return;
   string class_name(klass.className);
   out << "method = &Method{" << endl;
-  out << "classes[\"" << class_name << "\"]," << endl;
+  out << "Classes[\"" << class_name << "\"]," << endl;
   out << "\"" << smoke->methodNames[method.name] << "\"," << endl;
   out << "make([]*Type, 0)," << endl;
-  out << "types[" << method.ret << "]," << endl;
+  out << "Types[" << method.ret << "]," << endl;
   out << ((method.flags & Smoke::mf_static) ? "true" : "false") << "," << endl;
   out << ((method.flags & Smoke::mf_const) ? "true" : "false") << "," << endl;
   out << ((method.flags & Smoke::mf_copyctor) ? "true" : "false") << "," << endl;
@@ -187,8 +187,8 @@ void generate_method_info(ofstream& out, Smoke* smoke, Smoke::Method method, int
   out << ((method.flags & Smoke::mf_explicit) ? "true" : "false") << "," << endl;
   out << "}" << endl;
   for (int i = 0; i < method.numArgs; i++) {
-    out << "method.arguments = append(method.arguments, types[";
+    out << "method.Arguments = append(method.Arguments, Types[";
     out << smoke->argumentList[method.args + i] << "])" << endl;
   }
-  out << "methods[" << idx << "] = method" << endl;
+  out << "Methods[" << idx << "] = method" << endl;
 }
