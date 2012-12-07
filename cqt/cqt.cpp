@@ -11,7 +11,7 @@ class Binding : public SmokeBinding {
   public:
     Binding(Smoke *s): SmokeBinding(s) {}
     void deleted(Smoke::Index classId, void *obj) {}
-    bool callMethod(Smoke::Index methodId, void *obj, Smoke::Stack, bool) {
+    bool callMethod(Smoke::Index methodId, void *obj, Smoke::Stack args, bool isAbstract) {
       return false;
     }
     char* className(Smoke::Index classId) {
