@@ -5,9 +5,28 @@ extern "C" {
 #include <stdbool.h>
 
 enum {
-  CQT_CORE = 0,
-  CQT_GUI = 1,
-  CQT_NONE = 2,
+  CQT_PHONON,
+  CQT_IMAGEBLITZ,
+  CQT_SCI,
+  CQT_QT3,
+  CQT_CORE,
+  CQT_DBUS,
+  CQT_DECL,
+  CQT_GUI,
+  CQT_HELP,
+  CQT_MULTIMEDIA,
+  CQT_NETWORK,
+  CQT_OPENGL,
+  CQT_SCRIPT,
+  CQT_SQL,
+  CQT_SVG,
+  CQT_TEST,
+  CQT_UITOOLS,
+  CQT_WEBKIT,
+  CQT_XML,
+  CQT_XMLPATTERNS,
+
+  CQT_NONE,
 };
 
 typedef union StackItem {

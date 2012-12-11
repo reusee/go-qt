@@ -1,8 +1,27 @@
 #include "cqt.h"
 
 #include <smoke.h>
+
+#include <smoke/phonon_smoke.h>
+#include <smoke/qimageblitz_smoke.h>
+#include <smoke/qsci_smoke.h>
+#include <smoke/qt3support_smoke.h>
 #include <smoke/qtcore_smoke.h>
+#include <smoke/qtdbus_smoke.h>
+#include <smoke/qtdeclarative_smoke.h>
 #include <smoke/qtgui_smoke.h>
+#include <smoke/qthelp_smoke.h>
+#include <smoke/qtmultimedia_smoke.h>
+#include <smoke/qtnetwork_smoke.h>
+#include <smoke/qtopengl_smoke.h>
+#include <smoke/qtscript_smoke.h>
+#include <smoke/qtsql_smoke.h>
+#include <smoke/qtsvg_smoke.h>
+#include <smoke/qttest_smoke.h>
+#include <smoke/qtuitools_smoke.h>
+#include <smoke/qtwebkit_smoke.h>
+#include <smoke/qtxml_smoke.h>
+#include <smoke/qtxmlpatterns_smoke.h>
 
 #include <iostream>
 using namespace std;
@@ -24,21 +43,54 @@ Binding *bindings[2];
 void cqt_init() {
   init_qtcore_Smoke();
   init_qtgui_Smoke();
+  bindings[CQT_PHONON] = new Binding(phonon_Smoke);
+  bindings[CQT_IMAGEBLITZ] = new Binding(qimageblitz_Smoke);
+  bindings[CQT_SCI] = new Binding(qsci_Smoke);
+  bindings[CQT_QT3] = new Binding(qt3support_Smoke);
   bindings[CQT_CORE] = new Binding(qtcore_Smoke);
+  bindings[CQT_DBUS] = new Binding(qtdbus_Smoke);
+  bindings[CQT_DECL] = new Binding(qtdeclarative_Smoke);
   bindings[CQT_GUI] = new Binding(qtgui_Smoke);
+  bindings[CQT_HELP] = new Binding(qthelp_Smoke);
+  bindings[CQT_MULTIMEDIA] = new Binding(qtmultimedia_Smoke);
+  bindings[CQT_NETWORK] = new Binding(qtnetwork_Smoke);
+  bindings[CQT_OPENGL] = new Binding(qtopengl_Smoke);
+  bindings[CQT_SCRIPT] = new Binding(qtscript_Smoke);
+  bindings[CQT_SQL] = new Binding(qtsql_Smoke);
+  bindings[CQT_SVG] = new Binding(qtsvg_Smoke);
+  bindings[CQT_TEST] = new Binding(qttest_Smoke);
+  bindings[CQT_UITOOLS] = new Binding(qtuitools_Smoke);
+  bindings[CQT_WEBKIT] = new Binding(qtwebkit_Smoke);
+  bindings[CQT_XML] = new Binding(qtxml_Smoke);
+  bindings[CQT_XMLPATTERNS] = new Binding(qtxmlpatterns_Smoke);
 }
 
 void cqt_call(int smoke_symbol, int binding_symbol, char* klass_name, char* method_name, void* obj, Stack stack) {
   Smoke *smoke;
   Binding *binding = bindings[binding_symbol];
   switch (smoke_symbol) {
-    case CQT_CORE: 
-      smoke = qtcore_Smoke;
-      break;
-    case CQT_GUI: 
-      smoke = qtgui_Smoke;
-      break;
+    case CQT_PHONON: smoke = phonon_Smoke; break;
+    case CQT_IMAGEBLITZ: smoke = qimageblitz_Smoke; break;
+    case CQT_SCI: smoke = qsci_Smoke; break;
+    case CQT_QT3: smoke = qt3support_Smoke; break;
+    case CQT_CORE: smoke = qtcore_Smoke; break;
+    case CQT_DBUS: smoke = qtdbus_Smoke; break;
+    case CQT_DECL: smoke = qtdeclarative_Smoke; break;
+    case CQT_GUI: smoke = qtgui_Smoke; break;
+    case CQT_HELP: smoke = qthelp_Smoke; break;
+    case CQT_MULTIMEDIA: smoke = qtmultimedia_Smoke; break;
+    case CQT_NETWORK: smoke = qtnetwork_Smoke; break;
+    case CQT_OPENGL: smoke = qtopengl_Smoke; break;
+    case CQT_SCRIPT: smoke = qtscript_Smoke; break;
+    case CQT_SQL: smoke = qtsql_Smoke; break;
+    case CQT_SVG: smoke = qtsvg_Smoke; break;
+    case CQT_TEST: smoke = qttest_Smoke; break;
+    case CQT_UITOOLS: smoke = qtuitools_Smoke; break;
+    case CQT_WEBKIT: smoke = qtwebkit_Smoke; break;
+    case CQT_XML: smoke = qtxml_Smoke; break;
+    case CQT_XMLPATTERNS: smoke = qtxmlpatterns_Smoke; break;
   }
+
   Smoke::ModuleIndex classId = smoke->findClass(klass_name);
   Smoke::ModuleIndex methodId = classId.smoke->findMethod(klass_name, method_name);
   Smoke::Class klass = classId.smoke->classes[classId.index];
